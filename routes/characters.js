@@ -25,13 +25,17 @@ router.get('/populate', function (req, res) {
     var json = XML.parse(data);
     var characters = json["character"];
 
-    knex('character').insert(characters)
-        .then(function (data) {
-            res.send(data);
-        })
-        .catch(function (error) {
-            res.send(error);
-        });
+    for (var character of characters) {
+        knex('character').insert(character)
+            .then(function (data) {
+                console.log(data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    res.send("OK");
+
 });
 
 /*
@@ -45,8 +49,6 @@ router.get('/characters/', function (req, res) {
     //Executem
     knex.select().from('character')
         .then(function (data) {
-            console.log(data);
-
             if (req.query.format === "xml") {
                 var xml = XML.stringify({"character": data}, 'characters');
                 res.send(xml);
