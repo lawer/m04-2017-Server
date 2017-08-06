@@ -53,7 +53,7 @@ router.get('/characters/', function (req, res) {
                 var xml = XML.stringify({"character": data}, 'characters');
                 res.send(xml);
             } else {
-                res.json(data);
+                res.json({"characters": data});
             }
         })
         .catch(function (error) {

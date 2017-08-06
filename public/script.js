@@ -16,23 +16,25 @@ function doTransform(xml, xsl) {
 
 }
 
-$.fn.renderXSLT = function renderXSLT(xmlUrl, xslUrl) {
+$.fn.renderXSLT = function renderXSLT(dataUrl, xslUrl) {
     var target = this;
 
-    const promises = [
-        $.get({
-            url: xmlUrl,
-            dataType: 'xml',
-        }),
-        $.get({
-            url: xslUrl,
-            dataType: 'xml',
-        }),
-    ];
+    var xmlPromise = $.get({
+        url: dataUrl,
+        dataType: 'xml',
+    });
+
+    var xslPromise = $.get({
+        url: xslUrl,
+        dataType: 'xml',
+    });
 
     return Promise
-        .all(promises)
+        .all([xmlPromise, xslPromise])
         .then(function (values) {
+            console.log(values[0]);
+            console.log(values[1]);
+
             target.html(doTransform(values[0], values[1]));
         })
         .catch(function (error) {
@@ -48,8 +50,7 @@ $.fn.renderEJS = function renderEJS(jsonUrl, ejsUrl) {
             url: jsonUrl,
         }),
         $.get({
-            url: ejsUrl,
-            ejsUrl
+            url: ejsUrl
         }),
     ];
 
@@ -57,7 +58,7 @@ $.fn.renderEJS = function renderEJS(jsonUrl, ejsUrl) {
         .all(promises)
         .then(function (values) {
             console.log(values[0]);
-            var html = ejs.render(values[1], {objects: values[0]});
+            var html = ejs.render(values[1], values[0]);
 
             target.html(html);
         })
@@ -77,7 +78,10 @@ $(document).ready(function () {
     $("#comics").renderXSLT(urlXml, urlXsl)*/
 
     var urlJSON = `${urlBase}${resource}/?format=json`;
+    var urlXsl = "comics.xslt";
     var urlEjs = "comics.ejs";
+
+    //$("#comics").renderXSLT(urlJSON, urlXsl, "json");
 
     $("#comics").renderEJS(urlJSON, urlEjs);
 });

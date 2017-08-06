@@ -3,9 +3,8 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output method="html" encoding="UTF-8" indent="yes" omit-xml-declaration="yes" xml:lang="en"/>
 
-    <xsl:template match="/">
+    <xsl:template match="//character">
         <div class="card-columns ">
-            <xsl:for-each select="/characters/character">
                 <xsl:sort select="name"/>
 
                 <xsl:if test="(deck != '') and (image != '')">
@@ -59,7 +58,6 @@
                     </div>
 
                 </xsl:if>
-            </xsl:for-each>
         </div>
 
     </xsl:template>

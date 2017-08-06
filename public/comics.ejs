@@ -1,39 +1,39 @@
 <div class="card-columns ">
-    <% for(object of objects) { %>
-        <% if ((object.deck != '') && (object.image != '')) { %>
+    <% for(character of characters) { %>
+        <% if ((character.deck != '') && (character.image != '')) { %>
 
             <div class="card border rounded m-1 w-10">
                 <div class="thumb"
-                     style="background-image: url(<%=object.image%>)">
+                     style="background-image: url(<%=character.image%>)">
                 </div>
                 <div class="card-block">
                     <h4 class="card-title">
-                        <%= object.name %>
+                        <%= character.name %>
                     </h4>
                     <p class="card-text">
-                        <%= object.deck %>
+                        <%= character.deck %>
                     </p>
 
-                    <% if (object.description != '') { %>
+                    <% if (character.description != '') { %>
                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#<%= object.id %>-modal">
+                                data-target="#<%= character.id %>-modal">
                             Details
                         </button>
 
-                        <div class="modal fade " id="<%= object.id %>-modal">
+                        <div class="modal fade " id="<%= character.id %>-modal">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">
-                                            <%= object.name %>
+                                            <%= character.name %>
                                         </h5>
                                         <button type="button" class="close" data-dismiss="modal"
                                                 aria-label="Close">
-                                            <span aria-hidden="true"/>
+                                            <span aria-hidden="true"></span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <%- object.description %>
+                                        <%- character.description %>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
