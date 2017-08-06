@@ -47,7 +47,7 @@ router.get('/populate', function (req, res) {
 */
 router.get('/characters/', function (req, res) {
     //Executem
-    knex.select().from('character')
+    knex.select().from('character').orderBy('name')
         .then(function (data) {
             if (req.query.format === "xml") {
                 var xml = XML.stringify({"character": data}, 'characters');

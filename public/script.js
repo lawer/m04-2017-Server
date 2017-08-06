@@ -33,8 +33,33 @@ $.fn.renderXSLT = function renderXSLT(xmlUrl, xslUrl) {
     return Promise
         .all(promises)
         .then(function (values) {
-            console.log(values[0]);
             target.html(doTransform(values[0], values[1]));
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+};
+
+$.fn.renderEJS = function renderEJS(jsonUrl, ejsUrl) {
+    var target = this;
+
+    const promises = [
+        $.get({
+            url: jsonUrl,
+        }),
+        $.get({
+            url: ejsUrl,
+            ejsUrl
+        }),
+    ];
+
+    return Promise
+        .all(promises)
+        .then(function (values) {
+            console.log(values[0]);
+            var html = ejs.render(values[1], {objects: values[0]});
+
+            target.html(html);
         })
         .catch(function (error) {
             console.log(error);
@@ -45,24 +70,14 @@ $.fn.renderXSLT = function renderXSLT(xmlUrl, xslUrl) {
 $(document).ready(function () {
     var urlBase = "api/";
     var resource = "characters";
-    var url = `${urlBase}${resource}/?format=xml`;
 
-    console.log(url);
-
+    /*var urlXml = `${urlBase}${resource}/?format=xml`;
     var urlXsl = "comics.xslt";
 
-    $("#comics").renderXSLT(url, urlXsl)
-     /*   .then(function () {
-            $('img').jqthumb({
-                width: '100%',
-                height: '300px',
-                position: {
-                    x: '50%',
-                    y: '0%'
-                }
-            });
-        })
-        .catch(function (error) {
-            console.log(error);
-        });*/
+    $("#comics").renderXSLT(urlXml, urlXsl)*/
+
+    var urlJSON = `${urlBase}${resource}/?format=json`;
+    var urlEjs = "comics.ejs";
+
+    $("#comics").renderEJS(urlJSON, urlEjs);
 });
