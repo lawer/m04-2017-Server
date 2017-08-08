@@ -50,69 +50,71 @@
 
         <div class="card-columns ">
 
-            <div v-for="character in characters"
-                 v-if="character.deck != '' && character.image != '' "
-                 class="card border rounded m-1 w-10">
+            <template v-for="character in characters">
+                <transition name="fade" appear>
 
-                <div class="thumb" :style="{ 'background-image': 'url(' + character.image + ')' } ">
-                </div>
-                <div class="card-block">
-                    <h4 class="card-title">
-                        {{character.name}}
-                    </h4>
-                    <p class="card-text">
-                        {{character.deck}}
-                    </p>
+                    <div v-if="character.deck != '' && character.image != '' "
+                         class="card border rounded m-1 w-10">
 
-                    <div>
-                        <button type="button" class="btn btn-info" data-toggle="modal"
-                                :data-target="'#' + character.id + '-modal'">
-                            <i class="fa fa-info" aria-hidden="true"></i>
-                            Details
-                        </button>
+                        <div class="thumb" :style="{ 'background-image': 'url(' + character.image + ')' } ">
+                        </div>
+                        <div class="card-block">
+                            <h4 class="card-title">
+                                {{character.name}}
+                            </h4>
+                            <p class="card-text">
+                                {{character.deck}}
+                            </p>
 
-                        <button type="button" class="btn btn-warning" @click="modifyCharacter(character)">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            Modify
-                        </button>
-                        <button type="button" class="btn btn-danger" @click="deleteCharacter(character)">
-                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                            Remove
-                        </button>
-                    </div>
+                            <div>
+                                <button type="button" class="btn btn-info" data-toggle="modal"
+                                        :data-target="'#' + character.id + '-modal'">
+                                    <i class="fa fa-info" aria-hidden="true"></i>
+                                    Details
+                                </button>
 
-                    <div class="modal fade " :id="character.id + '-modal' ">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">
-                                        {{ character.name }}
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close">
-                                        <span aria-hidden="true"></span>
-                                    </button>
-                                </div>
-                                <div class="modal-body" v-if="character.description != '' "
-                                     v-html="character.description">
-                                </div>
+                                <button type="button" class="btn btn-warning" @click="modifyCharacter(character)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    Modify
+                                </button>
+                                <button type="button" class="btn btn-danger" @click="deleteCharacter(character)">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    Remove
+                                </button>
+                            </div>
 
-                                <div v-else>
-                                    <h5> No description </h5>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                        Close
-                                    </button>
+                            <div class="modal fade " :id="character.id + '-modal' ">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">
+                                                {{ character.name }}
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true"></span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" v-if="character.description != '' "
+                                             v-html="character.description">
+                                        </div>
+
+                                        <div v-else>
+                                            <h5> No description </h5>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
-
-                </div>
-            </div>
-
-
+                </transition>
+            </template>
         </div>
     </div>
 </div>
