@@ -1,53 +1,60 @@
 <div class="card-columns ">
     <% for(character of characters) { %>
-        <% if ((character.deck != '') && (character.image != '')) { %>
+    <% if ((character.deck != '') && (character.image != '')) { %>
 
-            <div class="card border rounded m-1 w-10">
-                <div class="thumb"
-                     style="background-image: url(<%=character.image%>)">
-                </div>
-                <div class="card-block">
-                    <h4 class="card-title">
-                        <%= character.name %>
-                    </h4>
-                    <p class="card-text">
-                        <%= character.deck %>
-                    </p>
+    <div class="card border rounded m-1 w-10">
+        <div class="thumb"
+             style="background-image: url(<%= character.image %>)">
+        </div>
+        <div class="card-block">
+            <h4 class="card-title">
+                <%= character.name %>
+            </h4>
+            <p class="card-text">
+                <%= character.deck %>
+            </p>
 
-                    <% if (character.description != '') { %>
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#<%= character.id %>-modal">
-                            Details
-                        </button>
+            <div>
+                <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#<%= character.id %>-modal">
+                    Details
+                </button>
 
-                        <div class="modal fade " id="<%= character.id %>-modal">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">
-                                            <%= character.name %>
-                                        </h5>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
-                                            <span aria-hidden="true"></span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <%- character.description %>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Close
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                <button type="button" class="btn btn-warning">Modify</button>
+                <button type="button" class="btn btn-danger">Remove</button>
+            </div>
+
+            <div class="modal fade " id="<%= character.id %>-modal">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <%= character.name %>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
                         </div>
-                    <% } %>
-
+                        <div class="modal-body">
+                            <% if (character.description != '') { %>
+                            <%- character.description %>
+                            <% } else { %>
+                            <h5> No description </h5>
+                            <% } %>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-        <% } %>
+        </div>
+    </div>
+
+    <% } %>
     <% } %>
 </div>

@@ -12,7 +12,9 @@
 <body>
 
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
+            aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#">Comics</a>
@@ -39,14 +41,73 @@
         <h1 class="display-4">Comics!</h1>
     </div>
     <div id="comics" class="row">
+        <div class="card-columns ">
 
+            <div v-for="character in characters"
+                 v-if="character.deck != '' && character.image != '' "
+                 class="card border rounded m-1 w-10">
+
+                <div class="thumb" :style="{ 'background-image': 'url(' + character.image + ')' } ">
+                </div>
+                <div class="card-block">
+                    <h4 class="card-title">
+                        {{character.name}}
+                    </h4>
+                    <p class="card-text">
+                        {{character.deck}}
+                    </p>
+
+                    <div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                :data-target="'#' + character.id + '-modal'">
+                            Details
+                        </button>
+
+                        <button type="button" class="btn btn-warning">Modify</button>
+                        <button type="button" class="btn btn-danger">Remove</button>
+                    </div>
+
+                    <div class="modal fade " :id="character.id + '-modal' ">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">
+                                        {{ character.name }}
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" v-if="character.description != '' "
+                                     v-html="character.description">
+                                </div>
+
+                                <div v-else>
+                                    <h5> No description </h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
     </div>
 </div>
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
-<script src="https://npmcdn.com/ejs/ejs.min.js"></script>
+
+<script src="https://unpkg.com/vue"></script>
 <script src="script.js"></script>
 
 </body>

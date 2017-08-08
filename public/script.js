@@ -58,7 +58,7 @@ $.fn.renderEJS = function renderEJS(jsonUrl, ejsUrl) {
         .all(promises)
         .then(function (values) {
             console.log(values[0]);
-            var html = ejs.render(values[1], values[0]);
+            var html = ejs.render(values[1], values[0], "comics.ejs");
 
             target.html(html);
         })
@@ -69,13 +69,13 @@ $.fn.renderEJS = function renderEJS(jsonUrl, ejsUrl) {
 
 
 $(document).ready(function () {
-    var urlBase = "api/";
+    /*var urlBase = "api/";
     var resource = "characters";
 
-    /*var urlXml = `${urlBase}${resource}/?format=xml`;
+    var urlXml = `${urlBase}${resource}/?format=xml`;
     var urlXsl = "comics.xslt";
 
-    $("#comics").renderXSLT(urlXml, urlXsl)*/
+    $("#comics").renderXSLT(urlXml, urlXsl)
 
     var urlJSON = `${urlBase}${resource}/?format=json`;
     var urlXsl = "comics.xslt";
@@ -83,5 +83,25 @@ $(document).ready(function () {
 
     //$("#comics").renderXSLT(urlJSON, urlXsl, "json");
 
-    $("#comics").renderEJS(urlJSON, urlEjs);
+    $("#comics").renderEJS(urlJSON, urlEjs);*/
+
+    var app = new Vue({
+        el: '#comics',
+
+        data: {
+            characters: []
+        },
+
+        created() {
+            $.getJSON("api/characters")
+                .then(response => {
+                    //console.log(response);
+                    // JSON responses are automatically parsed.
+                    this.characters = response.characters
+                })
+                .catch(e => {
+                    this.errors.push(e)
+                })
+        }
+    });
 });

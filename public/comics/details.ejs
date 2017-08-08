@@ -1,0 +1,30 @@
+<% if (character.description != '') { %>
+    <button type="button" class="btn btn-primary" data-toggle="modal"
+            data-target="#<%= character.id %>-modal">
+        Details
+    </button>
+
+    <div class="modal fade " id="<%= character.id %>-modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <%= character.name %>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <%- character.description %>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<% } %>
