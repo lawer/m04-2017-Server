@@ -68,20 +68,41 @@ $.fn.renderEJS = function renderEJS(jsonUrl, ejsUrl) {
 };
 
 
+function refreshData() {
+    $("#comics").renderEJS("api/characters", "comics.ejs");
+}
+
 $(document).ready(function () {
     var urlBase = "api/";
     var resource = "characters";
 
-    /*var urlXml = `${urlBase}${resource}/?format=xml`;
-    var urlXsl = "comics.xslt";
-
-    $("#comics").renderXSLT(urlXml, urlXsl)*/
-
-    var urlJSON = `${urlBase}${resource}/?format=json`;
-    var urlXsl = "comics.xslt";
+    var urlJSON = `${urlBase}${resource}`;
     var urlEjs = "comics.ejs";
 
     //$("#comics").renderXSLT(urlJSON, urlXsl, "json");
+    refreshData();
 
-    $("#comics").renderEJS(urlJSON, urlEjs);
+    var root = null;
+    var useHash = true; // Defaults to: false
+    var hash = '#!'; // Defaults to: '#'
+    new Navigo(root, useHash)
+        .on({
+            '/characters/modify/:id': function (params) {
+            },
+            '/characters/remove/:id': function (params) {
+                var id = params.id;
+                $("#card-" + id)
+                    .fadeOut(1000)
+                    .then(function () {
+                        $.ajax({
+                            url: 'api/characters/' + id,
+                            type: 'DELETE',
+                        });
+                    })
+                    .then(function () {
+                        refreshData();
+                    });
+            },
+        })
+        .resolve();
 });
