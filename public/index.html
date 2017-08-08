@@ -4,10 +4,12 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" href="estils.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="estils.css">
+
 </head>
 <body>
 
@@ -41,6 +43,11 @@
         <h1 class="display-4">Comics!</h1>
     </div>
     <div id="comics" class="row">
+        <button type="button" class="btn btn-primary">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Add
+        </button>
+
         <div class="card-columns ">
 
             <div v-for="character in characters"
@@ -58,13 +65,20 @@
                     </p>
 
                     <div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                        <button type="button" class="btn btn-info" data-toggle="modal"
                                 :data-target="'#' + character.id + '-modal'">
+                            <i class="fa fa-info" aria-hidden="true"></i>
                             Details
                         </button>
 
-                        <button type="button" class="btn btn-warning">Modify</button>
-                        <button type="button" class="btn btn-danger">Remove</button>
+                        <button type="button" class="btn btn-warning" @click="modifyCharacter(character)">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            Modify
+                        </button>
+                        <button type="button" class="btn btn-danger" @click="deleteCharacter(character)">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            Remove
+                        </button>
                     </div>
 
                     <div class="modal fade " :id="character.id + '-modal' ">
@@ -108,6 +122,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 
 <script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vue-resource"></script>
 <script src="script.js"></script>
 
 </body>
