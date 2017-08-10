@@ -13,5 +13,9 @@
     <orderEntry type="library" name="jquery-3.1.1" level="application" />
     <orderEntry type="library" name="tether" level="application" />
     <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="jquery.form" level="application" />
+    <orderEntry type="library" name="ejs" level="application" />
+    <orderEntry type="library" name="loadingoverlay" level="application" />
+    <orderEntry type="library" name="loadingoverlay_progress" level="application" />
   </component>
 </module>

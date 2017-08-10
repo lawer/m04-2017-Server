@@ -32,9 +32,6 @@ $.fn.renderXSLT = function renderXSLT(dataUrl, xslUrl) {
     return Promise
         .all([xmlPromise, xslPromise])
         .then(function (values) {
-            console.log(values[0]);
-            console.log(values[1]);
-
             target.html(doTransform(values[0], values[1]));
         })
         .catch(function (error) {
@@ -57,19 +54,48 @@ $.fn.renderEJS = function renderEJS(jsonUrl, ejsUrl) {
     return Promise
         .all(promises)
         .then(function (values) {
-            console.log(values[0]);
             var html = ejs.render(values[1], values[0]);
 
+            target.hide();
+
             target.html(html);
+
+            target.fadeIn(1000);
         })
         .catch(function (error) {
             console.log(error);
         });
 };
 
+$.fn.serializeObject = function () {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+$.fn.hideModal = function () {
+    this.find("[data-dismiss=modal]").click();
+};
+
 
 function refreshData() {
-    $("#comics").renderEJS("api/characters", "comics.ejs");
+    $.LoadingOverlay("show");
+
+    $("#comics")
+        .renderEJS("api/characters", "comics.ejs")
+        .then(function () {
+            $.LoadingOverlay("hide");
+        });
 }
 
 $(document).ready(function () {
@@ -79,30 +105,56 @@ $(document).ready(function () {
     var urlJSON = `${urlBase}${resource}`;
     var urlEjs = "comics.ejs";
 
-    //$("#comics").renderXSLT(urlJSON, urlXsl, "json");
     refreshData();
 
-    var root = null;
-    var useHash = true; // Defaults to: false
-    var hash = '#!'; // Defaults to: '#'
-    new Navigo(root, useHash)
-        .on({
-            '/characters/modify/:id': function (params) {
-            },
-            '/characters/remove/:id': function (params) {
-                var id = params.id;
-                $("#card-" + id)
-                    .fadeOut(1000)
-                    .then(function () {
-                        $.ajax({
-                            url: 'api/characters/' + id,
-                            type: 'DELETE',
-                        });
-                    })
-                    .then(function () {
-                        refreshData();
-                    });
-            },
+    $(document)
+        .on("click", ".btn-delete", function (event) {
+            var boto = $(this);
+            var id = boto.data("id");
+
+            $.ajax({
+                url: 'api/characters/' + id,
+                type: 'DELETE',
+            }).then(function () {
+                $("#card-" + id).fadeOut(1000);
+            }).catch(function (error) {
+                console.log(error);
+            });
         })
-        .resolve();
+        .on("submit", "#add-user-form", function (event) {
+            var form = $(this);
+            event.preventDefault();
+
+            var data = form.serializeObject();
+
+            $.ajax({
+                url: 'api/characters/',
+                data: data,
+                type: 'POST',
+            }).then(function () {
+                refreshData();
+
+                $("#add-user-form").hideModal();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        })
+        .on("submit", ".edit-form", function (event) {
+            var form = $(this);
+            event.preventDefault();
+
+            var data = form.serializeObject();
+
+            $.ajax({
+                url: 'api/characters/' + data.id,
+                data: data,
+                type: 'PUT',
+            }).then(function () {
+                refreshData();
+
+                $("#edit-user-form-" + data.id).hideModal();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        })
 });

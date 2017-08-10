@@ -65,6 +65,8 @@ router.get('/characters/', function (req, res) {
 router.post('/characters/', function (req, res) {
     const data = req.body;
 
+    console.log(data);
+
     knex('character').insert(data)
         .then(function (id) {
             res.send(id);
@@ -95,7 +97,7 @@ router.put('/characters/:id', function (req, res) {
     knex.select().from('character').where('id', id)
         .update(data)
         .then(function (data) {
-            res.json(data[0]);
+            res.send(data[0]);
         })
         .catch(function (error) {
             console.log(error);
