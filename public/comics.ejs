@@ -1,9 +1,16 @@
 <div class="m-1">
-    <button type="button" class="btn btn-primary" data-toggle="modal"
-            data-target="#add-modal">
-        <i class="fa fa-plus" aria-hidden="true"></i>
-        Add
-    </button>
+    <form class="form-inline m-1">
+        <button type="button" class="btn btn-primary" data-toggle="modal"
+                data-target="#add-modal">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Add
+        </button>
+
+        <div class="input-group m-2">
+            <span class="input-group-addon" id="basic-addon2">Busqueda</span>
+            <input type="text" class="form-control" placeholder="Nom" aria-describedby="basic-addon2" id="busqueda">
+        </div>
+    </form>
 
     <!-- MODAL ADD -->
     <div class="modal fade" id="add-modal">
@@ -69,7 +76,7 @@
     <% for(character of characters) { %>
     <% if ((character.deck != '') && (character.image != '')) { %>
 
-    <div id="card-<%= character.id %>" class="card border rounded m-1 w-10">
+    <div id="card-<%= character.id %>" class="card border rounded m-2 w-10">
         <div class="thumb"
              style="background-image: url(<%= character.image %>)">
         </div>

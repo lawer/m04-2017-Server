@@ -108,19 +108,7 @@ $(document).ready(function () {
     refreshData();
 
     $(document)
-        .on("click", ".btn-delete", function (event) {
-            var boto = $(this);
-            var id = boto.data("id");
-
-            $.ajax({
-                url: 'api/characters/' + id,
-                type: 'DELETE',
-            }).then(function () {
-                $("#card-" + id).fadeOut(1000);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        })
+    //CREATE
         .on("submit", "#add-user-form", function (event) {
             var form = $(this);
             event.preventDefault();
@@ -139,6 +127,8 @@ $(document).ready(function () {
                 console.log(error);
             });
         })
+        //READ -> Modal
+        //UPDATE
         .on("submit", ".edit-form", function (event) {
             var form = $(this);
             event.preventDefault();
@@ -156,5 +146,22 @@ $(document).ready(function () {
             }).catch(function (error) {
                 console.log(error);
             });
+        })
+        //DELETE
+        .on("click", ".btn-delete", function (event) {
+            var boto = $(this);
+            var id = boto.data("id");
+
+            $.ajax({
+                url: 'api/characters/' + id,
+                type: 'DELETE',
+            }).then(function () {
+                $("#card-" + id).fadeOut(1000);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        })
+        .on("change", "#busqueda", function (event) {
+            var camp = $(this);
         })
 });
