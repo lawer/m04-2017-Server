@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="estils.css">
 
 </head>
+
 <body>
 
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
@@ -43,78 +44,209 @@
         <h1 class="display-4">Comics!</h1>
     </div>
     <div id="comics" class="row">
-        <button type="button" class="btn btn-primary">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Add
-        </button>
+        <div class="m-1">
+            <form class="form-inline m-1">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Add
+                </button>
 
-        <div class="card-columns ">
+                <div class="input-group m-2">
+                    <span class="input-group-addon" id="basic-addon2">Busqueda</span>
+                    <input type="text" class="form-control" placeholder="Nom" aria-describedby="basic-addon2"
+                           id="busqueda">
+                </div>
+            </form>
 
-            <template v-for="character in characters">
-                <transition name="fade" appear>
-
-                    <div v-if="character.deck != '' && character.image != '' "
-                         class="card border rounded m-1 w-10">
-
-                        <div class="thumb" :style="{ 'background-image': 'url(' + character.image + ')' } ">
+            <!-- MODAL ADD -->
+            <div class="modal fade" id="add-modal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                Add character
+                            </h5>
                         </div>
-                        <div class="card-block">
-                            <h4 class="card-title">
-                                {{character.name}}
-                            </h4>
-                            <p class="card-text">
-                                {{character.deck}}
-                            </p>
+                        <form id="add-user-form">
 
-                            <div>
-                                <button type="button" class="btn btn-info" data-toggle="modal"
-                                        :data-target="'#' + character.id + '-modal'">
-                                    <i class="fa fa-info" aria-hidden="true"></i>
-                                    Details
-                                </button>
+                            <div class="modal-body">
 
-                                <button type="button" class="btn btn-warning" @click="modifyCharacter(character)">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    Modify
-                                </button>
-                                <button type="button" class="btn btn-danger" @click="deleteCharacter(character)">
-                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                    Remove
-                                </button>
-                            </div>
+                                <div class="form-group ">
+                                    <label for="form-add-id">ID</label>
+                                    <input type="number" class="form-control" id="form-add-id" name="id" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-add-name">Name</label>
+                                    <input type="text" class="form-control" id="form-add-name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-add-short-description">Short Description</label>
+                                    <textarea type="text" class="form-control" id="form-add-short-description"
+                                              name="deck" required></textarea>
+                                </div>
 
-                            <div class="modal fade " :id="character.id + '-modal' ">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">
-                                                {{ character.name }}
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                <span aria-hidden="true"></span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body" v-if="character.description != '' "
-                                             v-html="character.description">
-                                        </div>
+                                <div class="form-group">
+                                    <label for="form-add-long-description">Long Description</label>
+                                    <textarea type="text" class="form-control" id="form-add-long-description"
+                                              name="description"></textarea>
+                                </div>
 
-                                        <div v-else>
-                                            <h5> No description </h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Close
-                                            </button>
-                                        </div>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="form-add-image">Image URL</label>
+                                    <input type="url" class="form-control" id="form-add-image" name="image" required>
                                 </div>
                             </div>
 
-                        </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-submit">
+                                    Save changes
+                                </button>
+                            </div>
+
+                        </form>
+
                     </div>
-                </transition>
-            </template>
+                </div>
+            </div>
+            <!-- FI MODAL ADD -->
+
+            <div class="card-columns ">
+
+                <template v-for="character in characters">
+                    <transition name="fade" appear>
+
+                        <div v-if="character.deck != '' && character.image != '' "
+                             class="card border rounded m-1 w-10">
+
+                            <div class="thumb" :style="{ 'background-image': 'url(' + character.image + ')' } ">
+                            </div>
+                            <div class="card-block">
+                                <h4 class="card-title">
+                                    {{character.name}}
+                                </h4>
+                                <p class="card-text">
+                                    {{character.deck}}
+                                </p>
+
+                                <div>
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                            :data-target="'#' + character.id + '-modal'">
+                                        <i class="fa fa-info" aria-hidden="true"></i>
+                                        Details
+                                    </button>
+
+                                    <button type="button" class="btn btn-warning" data-toggle="modal"
+                                            :data-target="'#' + character.id + '-edit-modal'">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        Modify
+                                    </button>
+                                    <button type="button" class="btn btn-danger" @click="deleteCharacter(character)">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        Remove
+                                    </button>
+                                </div>
+
+                                <!-- MODAL DETALLS -->
+                                <div class="modal fade " :id="character.id + '-modal' ">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">
+                                                    {{ character.name }}
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body" v-if="character.description != '' "
+                                                 v-html="character.description">
+                                            </div>
+
+                                            <div v-else>
+                                                <h5> No description </h5>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FI MODAL DETALLS -->
+
+
+                                <!-- MODAL EDITAR -->
+                                <div class="modal fade" :id="character.id + '-edit-modal' ">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">
+                                                    Add character
+                                                </h5>
+                                            </div>
+                                            <form :id=" 'edit-user-form-' + character.id "
+                                                  :data-id="character.id"
+                                                  class="edit-form">
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="form-add-id">ID</label>
+                                                        <input type="number" class="form-control" id="form-edit-id"
+                                                               name="id"
+                                                               :value="character.id"
+                                                               required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="form-add-name">Name</label>
+                                                        <input type="text" class="form-control" id="form-edit-name"
+                                                               :value="character.name"
+                                                               name="name" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="form-add-short-description">Short
+                                                            Description</label>
+                                                        <textarea type="text" class="form-control"
+                                                                  id="form-edit-short-description"
+                                                                  name="deck" required> {{character.deck}} </textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="form-add-long-description">Long Description</label>
+                                                        <textarea type="text" class="form-control"
+                                                                  id="form-edit-long-description"
+                                                                  name="description"> {{ character.description }}</textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="form-add-image">Image URL</label>
+                                                        <input type="url" class="form-control" id="form-edit-image"
+                                                               :value="character.image"
+                                                               name="image" required>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary btn-submit">
+                                                        Save changes
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FI MODAL EDITAR -->
+
+
+                            </div>
+                        </div>
+                    </transition>
+                </template>
+            </div>
         </div>
     </div>
 </div>
@@ -128,4 +260,5 @@
 <script src="script.js"></script>
 
 </body>
+
 </html>

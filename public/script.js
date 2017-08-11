@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
     var app = new Vue({
         el: '#comics',
 
@@ -7,7 +7,7 @@ $(document).ready(function () {
         },
 
         methods: {
-            showCharacters: function () {
+            showCharacters() {
                 this.$http.get("api/characters")
                     .then(response => {
                         console.log(response);
@@ -30,7 +30,7 @@ $(document).ready(function () {
 
         },
 
-        created: function () {
+        created: function() {
             this.showCharacters();
         },
     });
