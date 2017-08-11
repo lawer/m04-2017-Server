@@ -67,6 +67,26 @@ $.fn.renderEJS = function renderEJS(jsonUrl, ejsUrl) {
         });
 };
 
+$.fn.renderEjsFromJSON = function renderEJS(json, ejsUrl) {
+    var target = this;
+
+    $.get({
+        url: ejsUrl
+    }).then(function(ejsFile){
+        console.log(ejsUrl);
+        let html = ejs.render(json, ejsFile);
+
+        target.hide();
+
+        target.html(html);
+
+        target.fadeIn(1000);
+    }).catch(function (error) {
+        console.log(error);
+    });
+};
+
+
 $.fn.serializeObject = function () {
     var o = {};
     var a = this.serializeArray();
@@ -99,12 +119,6 @@ function refreshData() {
 }
 
 $(document).ready(function () {
-    var urlBase = "api/";
-    var resource = "characters";
-
-    var urlJSON = `${urlBase}${resource}`;
-    var urlEjs = "comics.ejs";
-
     refreshData();
 
     $(document)
@@ -161,7 +175,8 @@ $(document).ready(function () {
                 console.log(error);
             });
         })
-        .on("change", "#busqueda", function (event) {
+        .on("input", "#busqueda", function (event) {
             var camp = $(this);
+            console.log(camp.val());
         })
 });
