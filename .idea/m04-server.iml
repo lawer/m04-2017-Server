@@ -17,5 +17,6 @@
     <orderEntry type="library" name="ejs" level="application" />
     <orderEntry type="library" name="loadingoverlay" level="application" />
     <orderEntry type="library" name="loadingoverlay_progress" level="application" />
+    <orderEntry type="library" name="jsrender" level="application" />
   </component>
 </module>

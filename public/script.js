@@ -111,11 +111,21 @@ $.fn.hideModal = function () {
 function refreshData() {
     $.LoadingOverlay("show");
 
-    $("#comics")
+    $.get({
+        url: "api/characters"
+    }).then(function (data) {
+        var template = $.templates("#comics_template");
+        var html = template.render(data.characters);
+        $("#target").html(html);
+        $.LoadingOverlay("hide");
+    });
+
+
+    /*$("#comics")
         .renderEJS("api/characters", "comics.ejs")
         .then(function () {
             $.LoadingOverlay("hide");
-        });
+        });*/
 }
 
 $(document).ready(function () {
@@ -177,6 +187,24 @@ $(document).ready(function () {
         })
         .on("input", "#busqueda", function (event) {
             var camp = $(this);
-            console.log(camp.val());
+            var query = camp.val();
+
+            $("#target").LoadingOverlay("show");
+
+            let url = "api/characters/search/" + query;
+            if(query === ''){
+                url = "api/characters";
+            }
+
+            $.get({
+                url: url,
+            }).then(function (data) {
+                var template = $.templates("#comics_template");
+                var html = template.render(data.characters);
+                $("#target").html(html);
+            }).always(function () {
+                $("#target").LoadingOverlay("hide");
+            });
+
         })
 });

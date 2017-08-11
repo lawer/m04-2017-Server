@@ -120,4 +120,18 @@ router.delete('/characters/:id', function (req, res) {
         });
 });
 
+router.get('/characters/search/:text', function (req, res) {
+    let text = req.param("text");
+    let parameter = `%${text}%`;
+
+    knex.raw("select * from character where UPPER(name) LIKE UPPER(?) ORDER BY name", parameter)
+        .then(function (data) {
+            res.json({"characters": data});
+        })
+        .catch(function (error) {
+            console.log(error);
+            res.send(error);
+        });
+});
+
 module.exports = router;

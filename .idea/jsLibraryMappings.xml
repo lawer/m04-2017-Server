@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{bootstrap, ejs, express-DefinitelyTyped, jquery-3.1.1, jquery.form, knex-DefinitelyTyped, loadingoverlay, loadingoverlay_progress, tether}" />
+    <file url="PROJECT" libraries="{bootstrap, ejs, express-DefinitelyTyped, jquery-3.1.1, jquery.form, jsrender, knex-DefinitelyTyped, loadingoverlay, loadingoverlay_progress, tether}" />
     <includedPredefinedLibrary name="Node.js Core" />
   </component>
 </project>
