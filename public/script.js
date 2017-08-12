@@ -119,13 +119,6 @@ function refreshData() {
         $("#target").html(html);
         $.LoadingOverlay("hide");
     });
-
-
-    /*$("#comics")
-        .renderEJS("api/characters", "comics.ejs")
-        .then(function () {
-            $.LoadingOverlay("hide");
-        });*/
 }
 
 $(document).ready(function () {
