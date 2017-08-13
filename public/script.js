@@ -139,7 +139,7 @@ $(document).ready(function () {
             }).then(function () {
                 refreshData();
 
-                $("#add-user-form").hideModal();
+                $("#add-modal").modal('hide');
             }).catch(function (error) {
                 console.log(error);
             });
@@ -159,7 +159,7 @@ $(document).ready(function () {
             }).then(function () {
                 refreshData();
 
-                $("#edit-user-form-" + data.id).hideModal();
+                $("#edit-modal-" + data.id).modal('hide');
             }).catch(function (error) {
                 console.log(error);
             });
