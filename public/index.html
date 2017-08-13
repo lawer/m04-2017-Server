@@ -8,7 +8,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/css/mdb.min.css"/>
 
     <link rel="stylesheet" href="estils.css">
 </head>
@@ -46,17 +45,18 @@
                 Add
             </button>
 
-            <div class="md-form m-2">
-                <input type="text" class="form-control" id="busqueda">
-                <label class="active" for="busqueda">Buscar per nom</label>
+            <div class="input-group m-2">
+                <span class="input-group-addon" id="basic-addon2">Busqueda</span>
+                <input type="text" class="form-control" placeholder="Nom" aria-describedby="basic-addon2"
+                       id="busqueda">
             </div>
         </form>
 
         <!-- MODAL ADD -->
-        <div class="modal fade" id="add-modal">
-            <div class="modal-dialog cascading-modal modal-lg" role="document">
+        <div class="modal" id="add-modal">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header light-blue unique-color white-text">
+                    <div class="modal-header">
                         <h5 class="modal-title">
                             Add character
                         </h5>
@@ -65,32 +65,29 @@
 
                         <div class="modal-body">
 
-                            <div class="md-form ">
+                            <div class="form-group ">
                                 <label for="form-add-id">ID</label>
                                 <input type="number" class="form-control" id="form-add-id"
                                        name="id" required>
                             </div>
-                            <div class="md-form">
+                            <div class="form-group">
                                 <label for="form-add-name">Name</label>
                                 <input type="text" class="form-control" id="form-add-name"
                                        name="name" required>
                             </div>
-
-                            <div class="md-form">
-                                <textarea type="text" id="form-add-short-description" class="md-textarea"
-                                          name="deck" required></textarea>
+                            <div class="form-group">
                                 <label for="form-add-short-description">Short Description</label>
+                                <textarea type="text" class="form-control" id="form-add-short-description"
+                                          name="deck" required></textarea>
                             </div>
 
-                            <div class="md-form">
-                                <textarea type="text" class="md-textarea"
-                                          id="form-add-long-description"
-                                          name="description"></textarea>
+                            <div class="form-group">
                                 <label for="form-add-long-description">Long Description</label>
-
+                                <textarea type="text" class="form-control" id="form-add-long-description"
+                                          name="description"></textarea>
                             </div>
 
-                            <div class="md-form">
+                            <div class="form-group">
                                 <label for="form-add-image">Image URL</label>
                                 <input type="url" class="form-control" id="form-add-image"
                                        name="image" required>
@@ -121,9 +118,8 @@
             </div>
 
             <script type="text/x-handlebars-template" id="comics_template">
-
                 {{if deck != '' && image != '' }}
-                <div id="card-{{:id}}" class="card card-cascade">
+                <div id="card-{{:id}}" class="card">
                     <div class="thumb"
                          style="background-image: url({{:image}})">
                     </div>
@@ -136,7 +132,7 @@
                         </p>
 
                         <div>
-                            <button type="button" class="btn btn-indigo" data-toggle="modal"
+                            <button type="button" class="btn btn-info" data-toggle="modal"
                                     data-target="#{{:id}}-modal">
                                 <i class="fa fa-search" aria-hidden="true"></i> Details
                             </button>
@@ -183,7 +179,7 @@
                         <div class="modal fade" id="edit-modal-{{:id}}">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <div class="modal-header light-blue unique-color white-text">
+                                    <div class="modal-header">
                                         <h5 class="modal-title">
                                             Add character
                                         </h5>
@@ -210,7 +206,6 @@
                                             <div class="form-group">
                                                 <label for="form-add-short-description">Short Description</label>
                                                 <textarea type="text" class="form-control"
-                                                          class="md-textarea
                                                           name="deck" required>{{:deck}}</textarea>
                                             </div>
 
@@ -218,7 +213,6 @@
                                                 <label for="form-add-long-description">Long Description</label>
                                                 <textarea type="text" class="form-control"
                                                           id="form-add-long-description"
-                                                          class="md-textarea
                                                           name="description">{{:description}}</textarea>
                                             </div>
 
@@ -257,7 +251,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.1/js/mdb.min.js"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
